@@ -6,13 +6,11 @@ import io.restassured.builder.RequestSpecBuilder;
 import io.restassured.filter.log.LogDetail;
 import io.restassured.http.ContentType;
 import io.restassured.specification.RequestSpecification;
-import lombok.Data;
 
 import java.util.Locale;
 
 import static io.restassured.RestAssured.given;
 
-@Data
 public class DataGenerator {
 
     private static RequestSpecification requestSpec = new RequestSpecBuilder()
@@ -23,7 +21,7 @@ public class DataGenerator {
             .log(LogDetail.ALL)
             .build();
 
-    public static UserData setUpAll(String status) {
+    public static UserData sendRequest(String status) {
         var userData = userGenerate(status);
         Gson gson = new Gson();
         String jsonUser = gson.toJson(userData);
@@ -42,6 +40,14 @@ public class DataGenerator {
         return new UserData(
                 faker.name().username(),
                 faker.internet().password(),
+                status
+        );
+    }
+
+    public static UserData badUser(String status) {
+        return new UserData(
+                "wrongLogin",
+                "wrongPassword",
                 status
         );
     }

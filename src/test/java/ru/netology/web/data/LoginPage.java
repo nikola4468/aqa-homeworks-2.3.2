@@ -2,6 +2,7 @@ package ru.netology.web.data;
 
 import com.codeborne.selenide.SelenideElement;
 import lombok.Value;
+import org.openqa.selenium.Keys;
 
 import static com.codeborne.selenide.Selenide.$;
 
@@ -16,4 +17,14 @@ public class LoginPage {
 
     SelenideElement notLogin = $("[data-test-id=login] .input__sub");
     SelenideElement notPassword = $("[data-test-id=password] .input__sub");
+
+    public void setData(UserData userData) {
+        getFieldLogin().setValue(userData.getLogin());
+        getFieldPassword().setValue(userData.getPassword());
+    }
+
+    public void cleaning(SelenideElement field) {
+        field.sendKeys(Keys.COMMAND, Keys.CONTROL, "a");
+        field.sendKeys(Keys.DELETE);
+    }
 }
